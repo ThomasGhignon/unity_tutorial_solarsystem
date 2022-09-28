@@ -4,10 +4,39 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public static GameController Instance = null;
+    public delegate void SpeedEvent(float newSpeed); 
+    public event SpeedEvent OnSpeedChange;
+    
+    private static GameController _instance = null;
+    public static GameController Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameController>();
+            }
+            return _instance;
+        }
+        
+        private set { _instance = value; }
+    }
 
-    [Tooltip("The speed at which the object will rotate")] [Range(-10, 10)]
-    public float speed = 1.0f;
+    [Tooltip("The speed at which the object will rotate")]
+    private float _speed = 1;
+    public float Speed
+    {
+        get => _speed;
+        set
+        {
+            if (OnSpeedChange != null && value != _speed)
+            {
+                OnSpeedChange.Invoke(value);
+            }
+            _speed = value;
+        }
+    }
+    //public float speed { get; set; }
     
     private float _previousSpeed = 0.0f;
 
@@ -28,13 +57,13 @@ public class GameController : MonoBehaviour
     }
     
     public void Pause() {
-        if (this.speed != 0.0f) {
-            this._previousSpeed = this.speed;
-            this.speed = 0.0f;
+        if (this.Speed != 0.0f) {
+            this._previousSpeed = this.Speed;
+            this.Speed = 0.0f;
         }
         else
         {
-            this.speed = this._previousSpeed == 0.0f ? 1.0f : this._previousSpeed;
+            this.Speed = this._previousSpeed == 0.0f ? 1.0f : this._previousSpeed;
         }
     }
 }

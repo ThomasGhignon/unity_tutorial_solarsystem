@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b0f84c2ecbd949dfb644cdc5ddfdc2f, type: 3}
   m_Name: EarthOrbitPreset 1
   m_EditorClassIdentifier: 
-  orbitalSpeed: -1
-  orbitalRadius: 964
+  orbitalSpeed: -37
+  orbitalRadius: 1635
