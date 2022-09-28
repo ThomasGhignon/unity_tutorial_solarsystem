@@ -6,7 +6,6 @@ public class AutoRotate : MonoBehaviour
 {
 
     public float speed = 1;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +15,13 @@ public class AutoRotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.Rotate(Vector3.up, this.speed, Space.Self);
+        float angle = this.speed;
+        float dt = Time.deltaTime;
+        angle *= dt;
+
+        if (GameController.Instance)
+            angle = angle * GameController.Instance.speed;
+
+        this.transform.Rotate(Vector3.up, angle, Space.Self);
     }
 }
